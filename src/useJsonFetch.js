@@ -6,11 +6,13 @@ export default function useJsonFetch(url, opts = {}) {
   const [error, setError] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
+
     fetch(url, opts)
       .then((res) => res.json())
       .then((parsed) => setData(parsed))
       .catch(() => setError(true))
-      .then(() => setLoading(false));
+      .finally(() => setLoading(false));
   }, [url]);
 
   return [data, loading, error];
